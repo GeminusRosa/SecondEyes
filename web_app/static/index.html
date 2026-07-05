@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SecondEyes is a responsive frontend for AI-generated vs real image analysis.">
+  <title>SecondEyes - AI vs Real Image Analyzer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <!-- Background elements -->
+  <div class="drift-orb drift-orb-left" aria-hidden="true"></div>
+  <div class="drift-orb drift-orb-right" aria-hidden="true"></div>
+  <div class="pulse-glow pulse-glow-left" aria-hidden="true"></div>
+  <div class="pulse-glow pulse-glow-right" aria-hidden="true"></div>
+  <!-- Navbar section -->
+  <nav id="navbar" class="navbar navbar-expand-xl navbar-dark navbar-round glass fixed-top">
+    <div class="container-fluid px-auto">
+      <a class="navbar-brand align-items-center gap-2 pb-0" href="#top">
+        <span class="icon">
+          <i class="bi bi-eye-fill dark-theme"></i>
+          <i class="bi bi-eye light-theme"></i>
+        </span>
+        SecondEyes
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarNav" class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav align-items-xl-center">
+          <li class="nav-item"><a class="nav-link pb-1" href="#demo">Demo</a></li>
+          <li class="nav-item"><a class="nav-link pb-1" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link pb-1" href="#how-it-works">How it works</a></li>
+          <!-- <li class="nav-item"><a class="nav-link pb-1" href="#stay-safe">Stay safe</a></li> -->
+          <li class="nav-item"><a class="nav-link pb-1" href="#contact">Contact</a></li>
+        </ul>
+        <button id="themeToggle" class="btn btn-sm theme-toggle" type="button" aria-label="Toggle theme">
+          <span class="icon">
+            <i class="bi bi-moon-stars-fill dark-theme"></i>
+            <i class="bi bi-sun light-theme"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <!-- Demo section -->
+  <main id="top">
+    <section class="hero-section" id="demo">
+      <div class="ambient ambient-right"></div>
+      <div class="ambient ambient-top"></div>
+      <div class="ambient ambient-bottom"></div>
+      <div class="container panel round-xl glass p-4 p-md-4">
+        <div class="row g-4">
+          <!-- Image dropzone -->
+          <div class="col-xl-6 col-lg-12">
+            <article class="panel round-lg glass p-4 p-md-4 h-100">
+              <p class="eyebrow">Image upload & sample picker</p>
+              <h1>Detect AI-generated images</h1>
+              <p>The detector automatically flags whether an uploaded image is real or AI-generated. Verify the
+                authenticity of images you see to stay protected from malicious media online.</p>
+              <div class="image-upload mt-4">
+                <button class="floating-demo demo-a round-md active" type="button">
+                  <img src="static/images/ai-wedding.png" alt="temp1 image">
+                </button>
+                <button class="floating-demo demo-b round-md" type="button">
+                  <img src="static/images/ai-friends.png" alt="temp2 image">
+                </button>
+                <button class="floating-demo demo-c round-md" type="button">
+                  <img src="static/images/ai-receipt.png" alt="temp3 image">
+                </button>
+                <button class="floating-demo demo-d round-md" type="button">
+                  <img src="static/images/ai-food.png" alt="temp4 image">
+                </button>
+                <button class="floating-demo demo-e round-md" type="button">
+                  <img src="static/images/ai-evidence.png" alt="temp5 image">
+                </button>
+                <button class="floating-demo demo-f round-md" type="button">
+                  <img src="static/images/ai-dessert.png" alt="temp6 image">
+                </button>
+                <button class="floating-demo demo-g round-md" type="button">
+                  <img src="static/images/ai-document.png" alt="temp7 image">
+                </button>
+                <button class="floating-demo demo-h round-md" type="button">
+                  <img src="static/images/ai-model.png" alt="temp8 image">
+                </button>
+                <div id="dropzone" class="dropzone dz-clickable round-lg panel-accent">
+                  <div class="dz-message">
+                    <h4>Drag & Drop an image</h4>
+                    <p class="mb-3">or click here to select from device.<br>You may also choose one of the floating demo cards for
+                      preview.</p>
+                    <!-- <p class="mb-3">After your image has been analyzed, you can peek behind the curtain to see how its been
+                      processed.</p> -->
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Image results -->
+          <div class="col-xl-6 col-lg-12">
+            <article class="panel round-lg glass p-4 p-md-4 h-100">
+              <p class="eyebrow">Live result preview</p>
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <h2>Result overview</h2>
+                  <p>Probability score and algorithm breakdown for the selected image.</p>
+                </div>
+              </div>
+              <div class="result-grid mt-4">
+                <div class="result-score-card round-xl accent-panel glass">
+                  <div class="score-ring" id="scoreRing">
+                    <span id="scoreValue">72%</span>
+                  </div>
+                  <div>
+                    <p class="eyebrow small">Probability</p>
+                    <h5 id="resultTitle" class="mb-1">Likely a real image</h5>
+                    <p id="resultSummary" class="mb-0">The current image leans toward a real photo, with mild AI
+                      characteristics visible in texture.</p>
+                  </div>
+                </div>
+                <div class="result-stack">
+                  <button class="button-bubble active" type="button">Real photo - 72%</button>
+                  <button class="button-bubble" type="button">Stable Diffusion - 18%</button>
+                  <button class="button-bubble" type="button">Midjourney - 10%</button>
+                </div>
+              </div>
+              <div class="insight-grid mt-4">
+                <article class="insight-card round-lg">
+                  <p class="eyebrow small">Detected patterns</p>
+                  <strong id="patternText">Natural camera noise and balanced contrast.</strong>
+                </article>
+                <article class="insight-card round-lg">
+                  <p class="eyebrow small">Recommended actions</p>
+                  <strong id="patternText">Consider the image as a strong real-photo candidate.</strong>
+                </article>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Features section -->
+    <section id="features" class="py-4 p-md-4">
+      <article class="container panel round-xl glass p-4 p-md-4">
+        <p class="eyebrow">Features overview</p>
+        <h2>What SecondEyes does to provide media transparency</h2>
+        <p class="mb-3">The focus of this application is to provide accessible means for online image verification.</p>
+        <div class="row g-4">
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-shield-lock-fill dark-theme"></i>
+                  <i class="bi bi-shield-lock light-theme"></i>
+                </span>
+                Privacy first
+              </h5>
+              <p>Your images remain yours. Uploaded files are processesd securely and never stored or shared with third party groups.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-layers-fill dark-theme"></i>
+                  <i class="bi bi-layers light-theme"></i>
+                </span>
+                Transparent results
+              </h5>
+              <p>Understand every prediction. View the analysis process, contributing factors and the reasoning behind each classification.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-people-fill dark-theme"></i>
+                  <i class="bi bi-people light-theme"></i>
+                </span>
+                Free to use
+              </h5>
+              <p>No subscriptions, paywalls or advertisements. Upload an image and get your results with no cost.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-lightning-charge-fill dark-theme"></i>
+                  <i class="bi bi-lightning-charge light-theme"></i>
+                </span>
+                Instant analysis
+              </h5>
+              <p>Recieve results within seconds. No lengthy processing queues or unecessary delays.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-box-fill dark-theme"></i>
+                  <i class="bi bi-box light-theme"></i>
+                </span>
+                Clear classification
+              </h5>
+              <p>Get a straightforward answer. Images are classified as authentic or AI-generated.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-hand-thumbs-up-fill dark-theme"></i>
+                  <i class="bi bi-hand-thumbs-up light-theme"></i>
+                </span>
+                Confidence rating
+              </h5>
+              <p>See how certain the system is. Every result includes a confidence score along with alternative classifications when applicable.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-cursor-fill dark-theme"></i>
+                  <i class="bi bi-cursor light-theme"></i>
+                </span>
+                Interactive results
+              </h5>
+              <p>Explore the analysis in detail. Inspect probability breakdowns, visual previews and supporting data behind the final verdict.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-fingerprint dark-theme"></i>
+                  <i class="bi bi-fingerprint light-theme"></i>
+                </span>
+                Artifact detection
+              </h5>
+              <p>Identify visual anomalies, synthetic fingerprints and other indicators commonly found within AI-generated images.</p>
+            </div>
+          </article>
+          <article class="col-12 col-md-4">
+            <div class="feature-card round-lg panel-accent h-100">
+              <h5 class="feature-title">
+                <span class="icon">
+                  <i class="bi bi-soundwave dark-theme"></i>
+                  <i class="bi bi-soundwave light-theme"></i>
+                </span>
+                Frequency analysis
+              </h5>
+              <p>Build on frequency-domain analysis, rather than constantly changing heuristics, delivering consistent and reproducible results.</p>
+            </div>
+          </article>
+        </div>
+      </article>
+    </section>
+    <!-- Architecture section -->
+    <section id="how-it-works" class="py-4 p-md-4">
+      <article class="container panel round-xl glass p-4 p-md-4">
+        <p class="eyebrow">Architecture explorer</p>
+        <h2>Learn what each layer does</h2>
+        <p class="mb-3">The model moves from basic texture recognition to deep feature interpretation, and the layer explorer makes that path visible.</p>
+        <div class="row g-4">
+          <div class="col-12 col-xl-7">
+            <div class="diagram panel round-lg glass p-4 p-md-4 ">
+              <img src="/static/images/diagram.png" alt="architecture diagram">
+            </div>
+          </div>
+          <div class="col-12 col-xl-5">
+            <div id="layerCard" class="round-xl accent-panel glass p-md-3">
+              <p class="eyebrow small">Selected layer</p>
+              <h5 id="layerTitle">Input</h5>
+              <p id="layerSummary" class="mb-2">The uploaded image enters the processing pipeline.</p>
+              <p id="layerAccent">Image preprocessing starts here.</p>
+            </div>
+          </div>
+        </div>
+        <div class="layer-grid mt-3">
+          <button class="button-bubble active" type="button" data-layer="Input" data-summary="The uploaded image enters the processing pipeline." data-accent="Image preprocessing starts here.">Input</button>
+          <button class="button-bubble" type="button" data-layer="Transform" data-summary="The image is resized and normalized to 256x256 pixels to maintain consistency across the network." data-accent="Tensor conversion begins the analysis pipeline.">Transform</button>
+          <button class="button-bubble" type="button" data-layer="Gaussian Filtering" data-summary="A Gaussian filter is applied to smooth the image and reduce noise. This preprocessing step helps the network focus on meaningful patterns rather than random pixel variations." data-accent="Smoothing preserves key forensic features.">Gaussian Filtering</button>
+          <button class="button-bubble" type="button" data-layer="FFT Spectrum" data-summary="Fast Fourier Transform (FFT) decomposes the image into frequency components. AI-generated images show distinctive patterns in the frequency domain that real photos don't." data-accent="Frequency analysis reveals synthetic artifacts.">FFT Spectrum</button>
+          <button class="button-bubble" type="button" data-layer="DCT" data-summary="Discrete Cosine Transform (DCT) is another frequency-domain representation that's particularly effective at detecting compression artifacts. JPEG compression and AI generation leave distinct DCT fingerprints." data-accent="Spectral signatures differ between real and fake.">DCT</button>
+          <button class="button-bubble" type="button" data-layer="Wavelet Residual" data-summary="Wavelet decomposition extracts high-frequency residuals that capture fine-grained details. AI-generated images have characteristic patterns in these residual components." data-accent="Wavelet coefficients encode generation methods.">Wavelet Residual</button>
+          <button class="button-bubble" type="button" data-layer="Feature Fusion" data-summary="The four feature streams (original image, FFT, DCT, wavelet residual) are combined using attention mechanisms. The network learns which features are most important for detection." data-accent="Attention fusion emphasizes key indicators.">Feature Fusion</button>
+          <button class="button-bubble" type="button" data-layer="Classifier" data-summary="Deep neural network layers process the fused features to extract high-level patterns. These layers learn to recognize complex forensic indicators of AI generation." data-accent="Deep learning uncovers hidden patterns.">Classifier</button>
+          <button class="button-bubble" type="button" data-layer="Real/AI" data-summary="The model outputs two main probabilities: the likelihood the image is real versus AI-generated. A secondary classifier also identifies which AI generator created the image." data-accent="Final classification determines authenticity.">Real/AI</button>
+          <button class="button-bubble" type="button" data-layer="Output" data-summary="Results are formatted as confidence scores and probabilities. The output shows both the binary real/AI classification and a ranked list of possible AI generators if applicable." data-accent="Scores provide actionable intelligence.">Output</button>
+        </div>
+      </article>
+    </section>
+    <!-- Contact section -->
+    <section id="contact" class="py-4 p-md-4">
+      <article class="container panel round-xl glass p-4 p-md-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-12 col-lg-6">
+            <p class="eyebrow">Contact</p>
+            <h2>Interested in contacting us?</h2>
+            <p>Feel free to share your thoughts, give feedback or reach out to us for any questions you might have!</p>
+          </div>
+          <div class="col-12 col-lg-6">
+            <form class="contact-form">
+              <label>Name
+                <input type="text" placeholder="John Doe">
+              </label>
+              <label>E-mail
+                <input type="email" placeholder="john@example.com">
+              </label>
+              <label>Message
+                <textarea rows="4" placeholder="Help! I uploaded a selfie and discovered I'm apparently AI-generated."></textarea>
+              </label>
+              <button class="button-bubble text-center" type="button">Send inquiry</button>
+            </form>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer class="footer footer-round mt-3 py-3">
+    <div class="container round-xl d-flex flex-column flex-md-row justify-content-between gap-2 text-center text-md-start">
+      <span>© 2026 SecondEyes. AI-generated vs real image analysis front-end.</span>
+      <span>Built with Bootstrap, soft glow visuals, and extensive amount of caffeine.</span>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  <script src="/static/script.js"></script>
+</body>
+
+</html>
